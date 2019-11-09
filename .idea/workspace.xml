@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e232b87-6010-4fd4-afa2-16553f8f1d69" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/def/ActivityEngine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/def/DataType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/def/Event.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/def/EventInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ActivityEngine.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AnalysisEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/def/AnalysisEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/def/ActivityEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/def/ActivityEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/def/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/def/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/def/EventInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/def/EventInfo.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +59,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1573237590961</updated>
-      <workItem from="1573237593926" duration="8338000" />
+      <workItem from="1573237593926" duration="15275000" />
     </task>
     <servers />
   </component>

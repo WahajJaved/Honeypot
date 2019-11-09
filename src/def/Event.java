@@ -2,9 +2,9 @@ package def;
 
 public class Event {
     public String name;
-    public float occurrence;
+    public double occurrence;
 
-    public Event(String name, float occur) {
+    public Event(String name, double occur) {
         this.name = name;
         this.occurrence = occur;
     }
