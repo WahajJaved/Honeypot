@@ -1,24 +1,39 @@
 package def;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class ActivityEngine {
 
     String eventFileName;
     String statFileName;
+    String outputFileName;
     int noOfDays;
 
+    // ArrayList containg all the events and their info
     ArrayList<EventInfo> eventInfos;
+    // ArrayList containing all the generated log events with a one-to-one index mapping to the EventInfo ArrayList
+    ArrayList<Event> events;
 
-    public ActivityEngine(String eventFile, String statFile, int days) {
+
+
+    public ActivityEngine(String eventFile, String statFile, String outputFile, int days) throws FileNotFoundException {
         eventFileName = eventFile;
         statFileName = statFile;
+        outputFileName = outputFile;
         noOfDays = days;
 
+        readEventsFromFile();
+        readStatsFromFile();
 
+        events = new ArrayList<Event>(eventInfos.size());
+        for (EventInfo eventInfo : eventInfos) {
+            events.add(new Event(eventInfo.name));
+        }
+
+        generateNormalEventOccurrences();
     }
 
     public void readEventsFromFile() throws FileNotFoundException {
@@ -103,9 +118,19 @@ public class ActivityEngine {
     }
 
 
-    public Event generateSingleNormalEvent() {
+    public void generateNormalEventOccurrences() {
+        EventInfo currentEventInfo;
+        Random random = new Random();
 
-        return null;
+        // Generating a normally distributed log event
+
+        for (int currentEvent = 0; currentEvent < events.size(); currentEvent++) {
+            currentEventInfo = eventInfos.get(currentEvent);
+            for (int i=0; i<noOfDays; i++) {
+                events.get(currentEvent).addOccurrence(
+                        random.nextGaussian()*currentEventInfo.stdDev + currentEventInfo.mean);
+            }
+        }
     }
 
     public void setEventInfoStatisticFromToken(String[] tokens) {
@@ -137,5 +162,25 @@ public class ActivityEngine {
             }
         }
         eventInfo.setStatistic(mean, stdDev);
+    }
+
+    public void writeGeneratedEventsToFile() throws IOException {
+        FileWriter fileWriter = new FileWriter(outputFileName);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        for (int currentEvent = 0; currentEvent < events.size(); currentEvent++) {
+            printWriter.printf("---");
+            Event event = events.get(currentEvent);
+            printWriter.printf("%s\n", event.name);
+            for (int currentDay=0; currentDay < event.occurrences.size(); currentDay++) {
+                if (eventInfos.get(currentEvent).type == EventDataType.CONTINOUS)
+                    printWriter.printf("Day %d: %f\n", currentDay, event.occurrences.get(currentDay));
+                else if (eventInfos.get(currentEvent).type == EventDataType.DISCRETE)
+                    printWriter.printf("Day %d: %d\n", currentDay, event.occurrences.get(currentDay));
+
+            }
+            printWriter.printf("Mean: %f" , event.getMean());
+            printWriter.printf("SD: %f" , event.getStdDev());
+        }
+        printWriter.close();
     }
 }

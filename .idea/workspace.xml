@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/def/ActivityEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/def/ActivityEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/def/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/def/Event.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/def/EventInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/def/EventInfo.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +58,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1573237590961</updated>
-      <workItem from="1573237593926" duration="15275000" />
+      <workItem from="1573237593926" duration="21845000" />
     </task>
     <servers />
   </component>
