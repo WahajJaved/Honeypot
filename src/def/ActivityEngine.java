@@ -164,8 +164,17 @@ public class ActivityEngine {
         eventInfo.setStatistic(mean, stdDev);
     }
 
-    public void writeGeneratedEventsToFile() throws IOException {
-        FileWriter fileWriter = new FileWriter(outputFileName);
+    
+    public ArrayList<Event> getGeneratedEvents() {
+        return events;
+    }
+    public ArrayList<EventInfo> getEventsInfos() {
+        return eventInfos;
+    }
+
+
+    public void writeGeneratedEventsToFile(String outputFile) throws IOException {
+        FileWriter fileWriter = new FileWriter(outputFile);
         PrintWriter printWriter = new PrintWriter(fileWriter);
         for (int currentEvent = 0; currentEvent < events.size(); currentEvent++) {
             printWriter.printf("---");
@@ -175,11 +184,11 @@ public class ActivityEngine {
                 if (eventInfos.get(currentEvent).type == EventDataType.CONTINOUS)
                     printWriter.printf("Day %d: %f\n", currentDay, event.occurrences.get(currentDay));
                 else if (eventInfos.get(currentEvent).type == EventDataType.DISCRETE)
-                    printWriter.printf("Day %d: %d\n", currentDay, event.occurrences.get(currentDay));
+                    printWriter.printf("Day %d: %d\n", currentDay, Math.round(event.occurrences.get(currentDay)));
 
             }
-            printWriter.printf("Mean: %f" , event.getMean());
-            printWriter.printf("SD: %f" , event.getStdDev());
+            // printWriter.printf("Mean: %f" , event.getMean());
+            // printWriter.printf("SD: %f" , event.getStdDev());
         }
         printWriter.close();
     }

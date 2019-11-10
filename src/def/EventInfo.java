@@ -21,4 +21,8 @@ public class EventInfo {
         this.mean = mean;
         this.stdDev = stdDev;
     }
+
+    public int getWeight() {
+        return weight;
+    }
 }
