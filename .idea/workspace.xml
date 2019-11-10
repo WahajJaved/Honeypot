@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e232b87-6010-4fd4-afa2-16553f8f1d69" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Honeypot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/def/EventsCollection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/def/ActivityEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/def/ActivityEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/def/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/def/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/def/AnalysisEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/def/AnalysisEngine.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +71,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
