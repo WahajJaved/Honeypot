@@ -12,9 +12,9 @@ public class AlertEngine {
     ActivityEngine engine;
     ArrayList<EventReport> eventReports;
 
-    public AlertEngine(String eventFile, String statFile, String outputFile, int days ) throws FileNotFoundException {
+    public AlertEngine(ActivityEngine acEngine, int days ) throws FileNotFoundException {
         this.noOfDays = days;
-        engine = new ActivityEngine(eventFile, statFile, outputFile, noOfDays);
+        engine = acEngine;
         eventReports = new ArrayList<EventReport>(days);
         getThreshold();
         calculateAnomalies();
@@ -24,7 +24,7 @@ public class AlertEngine {
     public void getThreshold() {
         int sumOfWeights = 0;
         ArrayList<EventInfo> eventInfos = engine.getEventsInfos();
-        for (int currentEvent = 0; currentEvent<noOfDays; currentEvent++) {
+        for (int currentEvent = 0; currentEvent<eventInfos.size() ; currentEvent++) {
             sumOfWeights += eventInfos.get(currentEvent).getWeight();
         }
         threshold = sumOfWeights*2;
@@ -61,6 +61,7 @@ public class AlertEngine {
 
         String currentLine = "";
         for (int currentEvent = 0; currentEvent < engine.getGeneratedEvents().size(); currentEvent++) {
+            currentLine = "";
             Event event = engine.getGeneratedEvents().get(currentEvent);
             EventInfo eventInfo = engine.getEventsInfos().get(currentEvent);
             currentLine += String.format("%s\t| ", event.name);
@@ -77,11 +78,12 @@ public class AlertEngine {
         }
 
         System.out.println("----------------------------------------");
-        System.out.println(String.format("%s: %f", "Threshold", threshold));
+        System.out.println(String.format("%s: %d", "Threshold", threshold));
 
         currentLine = "";
         String status = "";
         for (int currentDay = 0; currentDay < noOfDays; currentDay++) {
+            currentLine = "";
             currentLine += String.format("Day %d: %f ", currentDay+1, eventReports.get(currentDay).getCumulativeAnomalyCounter());
             if (threshold >= eventReports.get(currentDay).getCumulativeAnomalyCounter())
                 status = "OK";

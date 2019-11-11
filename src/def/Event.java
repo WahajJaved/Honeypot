@@ -8,7 +8,7 @@ public class Event {
 
     public Event(String name) {
         this.name = name;
-
+        occurrences = new ArrayList<Double>();
     }
     public void addOccurrence(double occurrence) {
         occurrences.add(occurrence);

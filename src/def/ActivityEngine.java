@@ -37,22 +37,31 @@ public class ActivityEngine {
     }
 
     public void readEventsFromFile() throws FileNotFoundException {
+
         File eventFile = new File(eventFileName);
         Scanner eventScanner = new Scanner(eventFile);
 
         int lineNo = 0;
 
+        System.out.println("\n==============================================\n");
+
+        System.out.println("Loading Events");
         while (eventScanner.hasNextLine()) {
             String currentLine = eventScanner.nextLine();
             if (lineNo == 0) {
                 int num = Integer.parseInt(currentLine);
                 eventInfos = new ArrayList<EventInfo>(num);
             } else {
+                System.out.println("----------------------------");
                 String[] tokens = currentLine.split(":");
                 eventInfos.add(getEventInfoFromToken(tokens));
+
+                System.out.println(String.format("> Added Event %s", eventInfos.get(eventInfos.size()-1).name));
             }
             lineNo++;
         }
+        System.out.println("\n==============================================");
+
     }
 
     public void readStatsFromFile() throws FileNotFoundException {
@@ -61,16 +70,25 @@ public class ActivityEngine {
 
         int lineNo = 0;
 
+        System.out.println("\n==============================================\n");
+
+        System.out.println("Loading Statistic");
         while (statScanner.hasNextLine()) {
             String currentLine = statScanner.nextLine();
+            if (currentLine.equals(" "))
+                break;
             if (lineNo == 0) {
                 int num = Integer.parseInt(currentLine);
             } else {
+                System.out.println("----------------------------");
                 String[] tokens = currentLine.split(":");
                 setEventInfoStatisticFromToken(tokens);
+                System.out.println(String.format("> Statistic added to Event %s", eventInfos.get(eventInfos.size()-1).name));
             }
             lineNo++;
         }
+        System.out.println("\n==============================================\n");
+
     }
 
     private EventInfo getEventInfoFromToken(String[] tokens) {
@@ -95,23 +113,32 @@ public class ActivityEngine {
                     }
                     break;
                 case 2:
-                    if (datatype == EventDataType.CONTINOUS) {
-                        min = Double.valueOf(tokens[tokenNo]);
+                    if (tokens[tokenNo].equals("")) {
+                        min = 0;
+                    }
+                    else if (datatype == EventDataType.CONTINOUS) {
+                        min = Double.parseDouble(tokens[tokenNo]);
                     } else if (datatype == EventDataType.DISCRETE) {
-                        min = Double.valueOf(tokens[tokenNo]);
+                        min = Integer.parseInt(tokens[tokenNo]);
                     }
                     break;
                 case 3:
-                    if (datatype == EventDataType.CONTINOUS) {
-                        max = Double.valueOf(tokens[tokenNo]);
-                    } else if (datatype == EventDataType.DISCRETE) {
-                        max = Double.valueOf(tokens[tokenNo]);
+                    if (tokens[tokenNo].equals("")) {
+                        max = 0;
+                    }
+                    else if (datatype == EventDataType.CONTINOUS) {
+                        max = Double.parseDouble(tokens[tokenNo]);
+                    }
+                    else if (datatype == EventDataType.DISCRETE) {
+                        max = Integer.parseInt(tokens[tokenNo]);
                     }
                 case 4:
-                    weight = Integer.valueOf(tokens[tokenNo]);
-                    break;
-                default:
-                    System.out.println("Error, out of range data");
+                    if (tokens[tokenNo].equals("")) {
+
+                    } else {
+                        weight = Integer.parseInt(tokens[tokenNo]);
+                        break;
+                    }
             }
         }
         return new EventInfo(name,datatype, min, max, weight);
@@ -122,14 +149,24 @@ public class ActivityEngine {
         EventInfo currentEventInfo;
         Random random = new Random();
 
+        System.out.println("Running Activity Simulation Engine");
+        System.out.println("---------------------------------------------");
+
         // Generating a normally distributed log event
 
         for (int currentEvent = 0; currentEvent < events.size(); currentEvent++) {
             currentEventInfo = eventInfos.get(currentEvent);
-            for (int i=0; i<noOfDays; i++) {
-                events.get(currentEvent).addOccurrence(
-                        random.nextGaussian()*currentEventInfo.stdDev + currentEventInfo.mean);
+            for (int currentDay=0; currentDay<noOfDays; currentDay++) {
+                System.out.println(String.format("Adding data for %s - Day %d", currentEventInfo.name, currentDay+1));
+                double value = random.nextGaussian()*currentEventInfo.stdDev + currentEventInfo.mean;
+                events.get(currentEvent).addOccurrence(value);
+                if (currentEventInfo.type == EventDataType.CONTINOUS)
+                    System.out.println(String.format("Generated Data: %f", value));
+                else
+                    System.out.println(String.format("Generated Data: %d", ((int) value)));
+
             }
+            System.out.println("========================================\n");
         }
     }
 
@@ -177,7 +214,7 @@ public class ActivityEngine {
         FileWriter fileWriter = new FileWriter(outputFile);
         PrintWriter printWriter = new PrintWriter(fileWriter);
         for (int currentEvent = 0; currentEvent < events.size(); currentEvent++) {
-            printWriter.printf("---");
+            printWriter.printf("---\n");
             Event event = events.get(currentEvent);
             printWriter.printf("%s\n", event.name);
             for (int currentDay=0; currentDay < event.occurrences.size(); currentDay++) {
@@ -187,8 +224,8 @@ public class ActivityEngine {
                     printWriter.printf("Day %d: %d\n", currentDay, Math.round(event.occurrences.get(currentDay)));
 
             }
-            // printWriter.printf("Mean: %f" , event.getMean());
-            // printWriter.printf("SD: %f" , event.getStdDev());
+            printWriter.printf("Mean: %f\n" , event.getMean());
+            printWriter.printf("SD: %f\n" , event.getStdDev());
         }
         printWriter.close();
     }
